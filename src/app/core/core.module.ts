@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexModule } from '@angular/flex-layout';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -8,15 +8,15 @@ import { HeaderModule } from "./components/header/header.module";
 
 @NgModule({
   imports: [
-    FlexLayoutModule,
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
     RouterModule,
+    FlexModule,
     HeaderModule
   ],
   exports: [
-    FlexLayoutModule,
+    FlexModule,
     MatTableModule,
     MatTabsModule,
     HeaderModule
