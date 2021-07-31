@@ -1,0 +1,10 @@
+<div *ngIf="(semaphores$ | async) as semaphores" fxFlex="row" fxFlexAlign="center" style="text-align: center;">
+  <mat-spinner *ngIf="semaphores?.loading"></mat-spinner>
+
+  <h1 *ngIf="semaphores?.noData">
+    No data
+  </h1>
+  <h1 *ngIf="semaphores?.error">
+    Server error
+  </h1>
+</div>

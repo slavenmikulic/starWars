@@ -1,0 +1,10 @@
+<form [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>Order by</mat-label>
+    <mat-select formControlName="order">
+      <mat-option value=""></mat-option>
+      <mat-option value="name">Name</mat-option>
+      <mat-option value="birth_year">Birth year</mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
