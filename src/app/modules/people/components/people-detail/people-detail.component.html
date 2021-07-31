@@ -1,0 +1,41 @@
+<mat-card class="sw__content">
+  <mat-card-header>
+    <mat-card-title>
+      {{ item.name }}
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        Height:
+        {{ item.height }}
+      </mat-list-item>
+      <mat-list-item>
+        Mass:
+        {{ item.mass }}kg
+      </mat-list-item>
+      <mat-list-item *ngIf="item.birth_year !== 'unknown'">
+        Year:
+        {{ item.birth_year }}
+      </mat-list-item>
+      <mat-list-item>
+        Gender:
+        {{ item.gender }}
+      </mat-list-item>
+      <mat-list-item *ngIf="(homeworld | async) as homeworld">
+        Homeworld:
+        {{ homeworld.name }}
+      </mat-list-item>
+      <mat-list-item>
+        Films:
+        <ng-container *ngFor="let film of (films | async); let last = last">
+          {{ film.title }}
+          <ng-container *ngIf="!last">,</ng-container>
+        </ng-container>
+      </mat-list-item>
+    </mat-list>
+
+
+  </mat-card-content>
+</mat-card>

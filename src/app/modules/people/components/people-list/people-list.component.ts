@@ -40,7 +40,7 @@ export class PeopleListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.listenForRouteParams();
+    this.listenForQueryParams();
   }
 
   onChangePagination(pageEvent: PageEvent): void {
@@ -92,7 +92,7 @@ export class PeopleListComponent implements OnInit, OnDestroy {
     this.queryParamsService.updateQueryParams(params);
   }
 
-  private listenForRouteParams(): void {
+  private listenForQueryParams(): void {
     this.queryParamsService.getQueryParams()
       .pipe(takeUntil(this.destroy$))
       .subscribe(queryParams => {
@@ -101,7 +101,7 @@ export class PeopleListComponent implements OnInit, OnDestroy {
       });
   }
 
-  private orderItems(items: People[], order: string) {
+  private orderItems(items: People[], order: string): People[] {
     const sortedItem = [...items];
     if (order === 'name') {
       sortedItem.sort(this.compareByName);

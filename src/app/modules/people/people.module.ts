@@ -13,6 +13,10 @@ import { SemaphoresModule } from "../../core/components/semaphores/semaphores.mo
 import { FilterModule } from "../../core/components/filter/filter.module";
 import { MatSelectModule } from "@angular/material/select";
 import { PeopleListOrderComponent } from './components/people-list/people-list-order/people-list-order.component';
+import { PeopleDetailComponent } from './components/people-detail/people-detail.component';
+import { PeopleResolver } from "./resolvers/people.resolver";
+import { PlanetService } from "../planet/services/planet.service";
+import { MovieService } from "../movie/services/movie.service";
 
 
 @NgModule({
@@ -20,6 +24,7 @@ import { PeopleListOrderComponent } from './components/people-list/people-list-o
     PeopleListComponent,
     PeopleListItemComponent,
     PeopleListOrderComponent,
+    PeopleDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -34,7 +39,10 @@ import { PeopleListOrderComponent } from './components/people-list/people-list-o
     MatSelectModule,
   ],
   providers: [
-    PeopleService
+    PeopleService,
+    PeopleResolver,
+    PlanetService,
+    MovieService
   ]
 })
 export class PeopleModule {

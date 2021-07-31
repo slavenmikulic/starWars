@@ -15,6 +15,7 @@ export class People {
   created?: Date;
   edited?: Date;
   url?: string;
+  id?: number;
 
   constructor(data?: Partial<People>) {
     Object.assign(this, data);

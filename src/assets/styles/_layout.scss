@@ -1,5 +1,15 @@
+.sw {
+  &__container {
+    max-width: 64rem;
+    margin: 0 auto;
+  }
 
-.sw__container {
-  max-width: 64rem;
-  margin: 0 auto;
+  &__card {
+    font-family: StarWars, sans-serif;
+    width: 100%;
+  }
+
+  &__content {
+    margin-top: 1rem;
+  }
 }

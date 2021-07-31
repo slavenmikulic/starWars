@@ -5,7 +5,7 @@ export class Response<Model> {
 
   results!: Model[];
 
-  constructor(data?: Response<Model>) {
+  constructor(data?: Response<Model[]>) {
     Object.assign(this, data);
   }
 }
