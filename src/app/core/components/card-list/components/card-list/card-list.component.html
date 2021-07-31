@@ -1,0 +1,20 @@
+<div fxLayout="row wrap" class="sw__list" fxLayoutAlign="center" *ngIf="(semaphores$ | async) as semaphores">
+  <ng-template [ngIf]="semaphores?.success" [ngIfElse]="semaphoreData">
+    <div fxLayout.gt-xs="row wrap"
+         fxLayout.xs="column"
+         fxLayoutAlign.gt-sm="start space-around"
+         fxLayoutAlign.lt-md="center space-around"
+         fxLayoutGap="2rem grid">
+      <ng-content></ng-content>
+      <!--      <app-people-list-item-->
+      <!--        fxFlex-->
+      <!--        *ngFor="let item of items"-->
+      <!--        [item]="item">-->
+      <!--      </app-people-list-item>-->
+    </div>
+  </ng-template>
+
+  <ng-template #semaphoreData>
+    <app-semaphores [semaphores$]="semaphores$"></app-semaphores>
+  </ng-template>
+</div>

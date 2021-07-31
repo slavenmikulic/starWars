@@ -26,7 +26,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   prepareForm(): void {
-    const search = this.activatedRoute.snapshot.params.search;
+    const search = this.activatedRoute.snapshot.queryParams.search;
     this.form = new FormGroup({
       search: new FormControl(search ?? '')
     });

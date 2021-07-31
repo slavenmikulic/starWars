@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { QueryParams } from "../models/query-params.model";
 import { BehaviorSubject, Observable } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
@@ -10,13 +10,12 @@ import { distinctUntilChanged, map } from "rxjs/operators";
 export class QueryParamsService {
   queryParams: BehaviorSubject<QueryParams>;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(public activatedRoute: ActivatedRoute) {
     this.queryParams = new BehaviorSubject<QueryParams>(this.updateQueryParamsFromRoute())
   }
 
   updateQueryParams(params: QueryParams): void {
     this.setQueryParams(params);
-    this.router.navigate(['./'], { relativeTo: this.activatedRoute, queryParams: this.queryParams.getValue() });
   }
 
   getQueryParams(): Observable<QueryParams> {
@@ -39,8 +38,8 @@ export class QueryParamsService {
     }
 
     return new QueryParams({
-      search: data.search ?? '',
-      order: data.order ?? '',
+      search: data.search || '',
+      order: data.order || '',
       page: page,
     });
   }
@@ -67,10 +66,14 @@ export class QueryParamsService {
 
     if (queryParams.page) {
       return {
-        page: queryParams.page
+        page: queryParams.page,
+        search: ''
       };
     }
 
-    return {};
+    return {
+      page: 1,
+      search: ''
+    };
   }
 }

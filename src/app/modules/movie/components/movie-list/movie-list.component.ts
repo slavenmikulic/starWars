@@ -1,25 +1,26 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { PeopleService } from "../../services/people.service";
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { MovieService } from "../../services/movie.service";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
-import { People } from "../../models/people.model";
-import { Response } from "../../../../core/models/response.model";
+import { People } from "../../../people/models/people.model";
 import { QueryParams } from "../../../../core/models/query-params.model";
-import { QueryParamsService } from "../../../../core/services/query-params.service";
 import { BehaviorSubject, of, Subject } from "rxjs";
-import { catchError, map, takeUntil } from "rxjs/operators";
 import { Semaphores } from "../../../../core/components/semaphores/models/semaphores.model";
+import { QueryParamsService } from "../../../../core/services/query-params.service";
+import { catchError, map, takeUntil } from "rxjs/operators";
+import { Response } from "../../../../core/models/response.model";
+import { Movie } from "../../models/movie.model";
 import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
-  selector: 'app-people-list',
-  templateUrl: './people-list.component.html',
-  styleUrls: ['./people-list.component.scss'],
+  selector: 'app-movie-list',
+  templateUrl: './movie-list.component.html',
+  styleUrls: ['./movie-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PeopleListComponent implements OnInit, OnDestroy {
+export class MovieListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  items!: People[];
+  items!: Movie[];
 
   params: QueryParams = {
     page: 1,
@@ -36,15 +37,14 @@ export class PeopleListComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject();
 
-  constructor(private peopleService: PeopleService,
-              private activatedRoute: ActivatedRoute,
+  constructor(private movieService: MovieService,
               private router: Router,
+              private activatedRoute: ActivatedRoute,
               private queryParamsService: QueryParamsService) {
   }
 
   ngOnInit(): void {
     this.listenForQueryParams();
-    // this.queryParamsService.activatedRoute = this.activatedRoute;
   }
 
   onChangePagination(pageEvent: PageEvent): void {
@@ -57,15 +57,9 @@ export class PeopleListComponent implements OnInit, OnDestroy {
     this.updateQueryParams(this.params);
   }
 
-  onOrder(value: string): void {
-    this.params.order = value;
-    this.updateQueryParams(this.params);
-  }
-
   private getList(params: QueryParams): void {
     this.semaphores$.next({ loading: true });
-
-    this.peopleService.list(params)
+    this.movieService.list(params)
       .pipe(
         catchError(response => {
           this.semaphores$.next({ error: true });
@@ -104,7 +98,8 @@ export class PeopleListComponent implements OnInit, OnDestroy {
         this.getList(this.params);
         this.router.navigate(['./'], {
           relativeTo: this.activatedRoute,
-          queryParams: this.params
+          queryParams: queryParams,
+          queryParamsHandling: 'merge'
         });
       });
   }
@@ -115,23 +110,10 @@ export class PeopleListComponent implements OnInit, OnDestroy {
       sortedItem.sort(this.compareByName);
     }
 
-    if (order === 'birth_year') {
-      sortedItem.sort(this.compareByBirthDay);
-    }
-
     return sortedItem;
   }
 
   private compareByName = (a: People, b: People): number => {
     return a.name?.localeCompare(b.name ?? '') ?? 0;
-  }
-
-  private compareByBirthDay = (a: People, b: People): number => {
-    return a.birth_year?.localeCompare(b.birth_year ?? '') ?? 0;
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }
