@@ -5,21 +5,37 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { RouterModule } from "@angular/router";
 import { HeaderModule } from "./components/header/header.module";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatCardModule } from "@angular/material/card";
+import { MatListModule } from "@angular/material/list";
+import { MatButtonModule } from "@angular/material/button";
+import { MatGridListModule } from "@angular/material/grid-list";
 
 @NgModule({
   imports: [
+    HeaderModule,
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
     RouterModule,
     FlexModule,
-    HeaderModule
+    MatPaginatorModule,
+    MatCardModule,
+    MatListModule,
+    MatButtonModule,
+    MatPaginatorModule,
+    MatGridListModule
   ],
   exports: [
+    HeaderModule,
     FlexModule,
     MatTableModule,
     MatTabsModule,
-    HeaderModule
+    MatCardModule,
+    MatListModule,
+    MatButtonModule,
+    MatPaginatorModule,
+    MatGridListModule
   ],
   declarations: []
 })

@@ -1,0 +1,18 @@
+<div style="margin: 2rem" fxLayout="row wrap" fxLayoutAlign="center">
+  <div fxLayout.gt-xs="row wrap"
+       fxLayout.xs="column"
+       fxLayoutAlign.gt-sm="start space-around"
+       fxLayoutAlign.lt-md="center space-around"
+       fxLayoutGap="2rem grid">
+
+    <app-people-list-item
+      fxFlex.xs="100"
+      fxFlex.gt-sm="33"
+      fxFlex.gt-xs="50"
+      *ngFor="let item of items"
+      [item]="item">
+    </app-people-list-item>
+  </div>
+</div>
+
+<mat-paginator (page)="onChangePagination($event)"></mat-paginator>

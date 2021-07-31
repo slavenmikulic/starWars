@@ -14,7 +14,7 @@ export abstract class ResponseListService<Model> {
   protected prepareParams(params: any): HttpParams {
     let httpParams = new HttpParams();
     for (let key in params) {
-      if (!params.hasOwnProperty(key)) {
+      if (!(params.hasOwnProperty(key) && params[key])) {
         continue;
       }
 

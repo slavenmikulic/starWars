@@ -1,0 +1,26 @@
+<mat-card class="sw__card" fxLayout="column" fxLayoutAlign="space-between">
+  <mat-card-header>
+    <mat-card-title>{{ item.name }}</mat-card-title>
+  </mat-card-header>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+  <mat-card-content fxLayout="column" fxLayoutGap="1rem" class="sw__content">
+
+    <div fxLayout fxLayoutAlign="space-between center" fxLayoutGap="2rem">
+      <span>Birthdate</span>
+      <span>
+        <ng-template [ngIf]="item.birth_year !== 'unknown'" [ngIfElse]="noData">{{ item.birth_year }}</ng-template>
+        <ng-template #noData>No data</ng-template>
+      </span>
+    </div>
+
+  </mat-card-content>
+
+  <mat-card-actions>
+    <div fxLayout fxLayoutAlign="end" class="sw__detail">
+      <a href="#" mat-stroked-button color="primary">See more</a>
+    </div>
+  </mat-card-actions>
+</mat-card>
