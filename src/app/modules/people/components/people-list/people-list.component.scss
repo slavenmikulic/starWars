@@ -1,8 +1,15 @@
 .sw {
   &__item {
-    width: 100%;
+    //width: 100%;
   }
 }
+
+.sw {
+  &__list {
+    margin: 2rem;
+  }
+}
+
 
 @media screen and (min-width: 600px) {
   .sw {

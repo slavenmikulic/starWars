@@ -1,20 +1,36 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { QueryParams } from "../models/query-params.model";
+import { BehaviorSubject, Observable } from "rxjs";
+import { distinctUntilChanged, map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class QueryParamsService {
+  queryParams: BehaviorSubject<QueryParams>;
+
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+    this.queryParams = new BehaviorSubject<QueryParams>(this.updateQueryParamsFromRoute())
   }
 
   updateQueryParams(params: QueryParams): void {
-    const queryParams = this.prepareParams(params);
-    this.router.navigate(['./'], { relativeTo: this.activatedRoute, queryParams });
+    this.setQueryParams(params);
+    this.router.navigate(['./'], { relativeTo: this.activatedRoute, queryParams: this.queryParams.getValue() });
   }
 
-  getQueryParams(): QueryParams {
+  getQueryParams(): Observable<QueryParams> {
+    return this.queryParams.pipe(
+      map(params => this.prepareParams(params)),
+      distinctUntilChanged()
+    );
+  }
+
+  setQueryParams(params: QueryParams): void {
+    this.queryParams.next(this.prepareParams(params));
+  }
+
+  updateQueryParamsFromRoute(): QueryParams {
     const data = this.activatedRoute.snapshot.queryParams;
 
     let page = Number.parseInt(data.page, 10);
@@ -23,31 +39,38 @@ export class QueryParamsService {
     }
 
     return new QueryParams({
-      query: data.query ?? '',
+      search: data.search ?? '',
       order: data.order ?? '',
       page: page,
-      orderBy: data.orderBy ?? ''
     });
   }
 
-  protected prepareParams(queryParams: QueryParams): QueryParams {
-    let params: QueryParams = {};
-    if (queryParams.query) {
-      params.query = queryParams.query;
-    }
-
-    if (queryParams.page) {
-      params.page = queryParams.page;
-    }
-
-    if (queryParams.orderBy) {
-      params.orderBy = queryParams.orderBy;
-    }
+  prepareParams(queryParams: QueryParams): QueryParams {
+    let params: QueryParams;
+    params = this.setSearchOrPage(queryParams);
 
     if (queryParams.order) {
       params.order = queryParams.order;
     }
 
     return params;
+  }
+
+  // If search is initiated, set page on 1
+  protected setSearchOrPage(queryParams: QueryParams): QueryParams {
+    if (queryParams.search) {
+      return {
+        search: queryParams.search,
+        page: 1
+      };
+    }
+
+    if (queryParams.page) {
+      return {
+        page: queryParams.page
+      };
+    }
+
+    return {};
   }
 }

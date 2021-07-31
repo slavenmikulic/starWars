@@ -1,8 +1,7 @@
 export class QueryParams {
   page?: number;
-  query?: string;
-  orderBy?: string;
-  order?: '' | 'asc' | 'desc';
+  search?: string;
+  order?: string;
 
   constructor(init?: Partial<QueryParams>) {
     Object.assign(this, init);

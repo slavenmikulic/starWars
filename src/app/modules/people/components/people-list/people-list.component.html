@@ -1,18 +1,27 @@
-<div style="margin: 2rem" fxLayout="row wrap" fxLayoutAlign="center">
-  <div fxLayout.gt-xs="row wrap"
-       fxLayout.xs="column"
-       fxLayoutAlign.gt-sm="start space-around"
-       fxLayoutAlign.lt-md="center space-around"
-       fxLayoutGap="2rem grid">
+<div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="2rem">
+  <app-people-list-order (orderChanged)="onOrder($event)"></app-people-list-order>
 
-    <app-people-list-item
-      fxFlex.xs="100"
-      fxFlex.gt-sm="33"
-      fxFlex.gt-xs="50"
-      *ngFor="let item of items"
-      [item]="item">
-    </app-people-list-item>
-  </div>
+  <app-filter (filterChange)="onSearch($event)"></app-filter>
 </div>
+<mat-divider></mat-divider>
 
-<mat-paginator (page)="onChangePagination($event)"></mat-paginator>
+<div fxLayout="row wrap" class="sw__list" fxLayoutAlign="center" *ngIf="(semaphores$ | async) as semaphores">
+  <ng-template [ngIf]="semaphores?.success" [ngIfElse]="semaphoreData">
+    <div fxLayout.gt-xs="row wrap"
+         fxLayout.xs="column"
+         fxLayoutAlign.gt-sm="start space-around"
+         fxLayoutAlign.lt-md="center space-around"
+         fxLayoutGap="2rem grid">
+      <app-people-list-item
+        fxFlex
+        *ngFor="let item of items"
+        [item]="item">
+      </app-people-list-item>
+    </div>
+  </ng-template>
+
+  <ng-template #semaphoreData>
+    <app-semaphores [semaphores$]="semaphores$"></app-semaphores>
+  </ng-template>
+</div>
+<mat-paginator (page)="onChangePagination($event)" [pageSize]="10"></mat-paginator>
