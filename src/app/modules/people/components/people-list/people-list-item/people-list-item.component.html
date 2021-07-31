@@ -1,16 +1,22 @@
 <mat-card class="sw__card" fxLayout="column" fxLayoutAlign="space-between">
   <div>
-    <mat-card-header>
+    <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
       <mat-card-title>{{ item.name }}</mat-card-title>
+      <mat-icon *ngIf="isFavorite$ | async" color="primary">star</mat-icon>
     </mat-card-header>
 
-    <mat-divider></mat-divider>
+    <div>
+      <mat-divider></mat-divider>
+    </div>
   </div>
   <mat-card-content fxLayout="column" fxLayoutGap="1rem" class="sw__content">
     <div fxLayout fxLayoutAlign="space-between center" fxLayoutGap="2rem">
       <span>Birthdate</span>
       <span>
-        <ng-template [ngIf]="item.birth_year !== 'unknown'" [ngIfElse]="noData">{{ item.birth_year }}</ng-template>
+        <ng-template [ngIf]="item.birth_year !== 'unknown'"
+                     [ngIfElse]="noData">
+          {{ item.birth_year }}
+        </ng-template>
         <ng-template #noData>No data</ng-template>
       </span>
     </div>
@@ -18,7 +24,15 @@
 
   <mat-card-actions>
     <div fxLayout fxLayoutAlign="end" class="sw__detail" *ngIf="itemId">
-      <a href="#" mat-stroked-button color="primary" [routerLink]="['./', itemId ]">See more</a>
+      <app-people-favorite [isFavorite$]="isFavorite$"
+                           [itemId]="itemId">
+      </app-people-favorite>
+
+      <a mat-stroked-button
+         color="primary"
+         [routerLink]="['./', itemId ]">
+        See more
+      </a>
     </div>
   </mat-card-actions>
 </mat-card>

@@ -17,6 +17,9 @@ import { PeopleDetailComponent } from './components/people-detail/people-detail.
 import { PeopleResolver } from "./resolvers/people.resolver";
 import { PlanetService } from "../planet/services/planet.service";
 import { MovieService } from "../movie/services/movie.service";
+import { PeopleFavoriteService } from "./services/people-favorite.service";
+import { MatIconModule } from "@angular/material/icon";
+import { PeopleFavoriteComponent } from './components/people-favorite/people-favorite.component';
 
 
 @NgModule({
@@ -25,6 +28,7 @@ import { MovieService } from "../movie/services/movie.service";
     PeopleListItemComponent,
     PeopleListOrderComponent,
     PeopleDetailComponent,
+    PeopleFavoriteComponent,
   ],
   imports: [
     CommonModule,
@@ -37,12 +41,14 @@ import { MovieService } from "../movie/services/movie.service";
     SemaphoresModule,
     FilterModule,
     MatSelectModule,
+    MatIconModule,
   ],
   providers: [
     PeopleService,
     PeopleResolver,
     PlanetService,
-    MovieService
+    MovieService,
+    PeopleFavoriteService
   ]
 })
 export class PeopleModule {

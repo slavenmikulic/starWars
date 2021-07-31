@@ -1,0 +1,9 @@
+<button mat-button
+        color="primary"
+        (click)="setFavorite()"
+        *ngIf="!(isFavorite$ | async) else removeFavoriteEl">
+  Set favorite
+</button>
+<ng-template #removeFavoriteEl>
+  <button mat-button (click)="removeFavorite()" color="warn">Remove favorite</button>
+</ng-template>
