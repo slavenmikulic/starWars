@@ -27,7 +27,7 @@ export class PeopleFavoriteService {
     }
 
     const index = this.favoriteIds?.indexOf(id);
-    if (index && index > -1) {
+    if (index != null && index > -1) {
       this.favoriteIds?.splice(index, 1);
       localStorage.setItem('favorites', JSON.stringify(this.favoriteIds));
     }

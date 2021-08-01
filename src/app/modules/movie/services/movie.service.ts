@@ -4,6 +4,7 @@ import { environment } from "../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Movie } from "../models/movie.model";
 import { forkJoin, Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Injectable()
 export class MovieService extends ResponseService<Movie> {
@@ -16,7 +17,10 @@ export class MovieService extends ResponseService<Movie> {
   getListOfMoviesFromListIds(ids: number[]) {
     const movies$: Observable<Movie>[] = [];
     for (let id of ids) {
-      movies$.push(this.getById(id))
+      movies$.push(this.getById(id).pipe(map(item => {
+        item.id = id;
+        return item;
+      })));
     }
 
     return forkJoin(movies$);

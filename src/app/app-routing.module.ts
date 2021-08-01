@@ -10,6 +10,11 @@ const routes: Routes = [
     path: 'movies',
     loadChildren: () => import('./modules/movie/movie.module').then(m => m.MovieModule)
   },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: '/people'
+  }
 ];
 
 @NgModule({

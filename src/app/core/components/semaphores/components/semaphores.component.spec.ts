@@ -8,9 +8,9 @@ describe('SemaphoresComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SemaphoresComponent ]
+      declarations: [SemaphoresComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

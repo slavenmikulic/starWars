@@ -19,12 +19,12 @@ export class PeopleDetailComponent implements OnInit {
   homeworld?: Observable<Planet>;
   films?: Observable<Movie[]>;
 
-  constructor(private route: ActivatedRoute, private planetService: PlanetService,
+  constructor(private activatedRoute: ActivatedRoute, private planetService: PlanetService,
               private movieService: MovieService) {
   }
 
   ngOnInit(): void {
-    this.item = this.route.snapshot.data.item;
+    this.item = this.activatedRoute.snapshot.data.item;
     this.getListOfMovies();
     this.getHomeworld();
   }

@@ -10,6 +10,16 @@ import { MatCardModule } from "@angular/material/card";
 import { MatListModule } from "@angular/material/list";
 import { MatButtonModule } from "@angular/material/button";
 import { MatGridListModule } from "@angular/material/grid-list";
+import { MatInputModule } from "@angular/material/input";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { ReactiveFormsModule } from "@angular/forms";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { SemaphoresModule } from "./components/semaphores/semaphores.module";
+import { FilterModule } from "./components/filter/filter.module";
+import { MatSelectModule } from "@angular/material/select";
+import { MatIconModule } from "@angular/material/icon";
+import { CardListModule } from "./components/card-list/card-list.module";
+import { MatChipsModule } from "@angular/material/chips";
 
 @NgModule({
   imports: [
@@ -24,7 +34,17 @@ import { MatGridListModule } from "@angular/material/grid-list";
     MatListModule,
     MatButtonModule,
     MatPaginatorModule,
-    MatGridListModule
+    MatGridListModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule,
+    SemaphoresModule,
+    FilterModule,
+    MatSelectModule,
+    MatIconModule,
+    CardListModule,
+    MatChipsModule,
   ],
   exports: [
     HeaderModule,
@@ -35,7 +55,17 @@ import { MatGridListModule } from "@angular/material/grid-list";
     MatListModule,
     MatButtonModule,
     MatPaginatorModule,
-    MatGridListModule
+    MatGridListModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule,
+    SemaphoresModule,
+    FilterModule,
+    MatSelectModule,
+    MatIconModule,
+    CardListModule,
+    MatChipsModule,
   ],
   declarations: []
 })

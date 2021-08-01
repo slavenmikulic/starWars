@@ -1,9 +1,8 @@
 .sw {
   &__card {
     height: 250px;
+    display: block;
+    min-width: 280px;
   }
 
-  &__content {
-    margin-top: 1rem;
-  }
 }

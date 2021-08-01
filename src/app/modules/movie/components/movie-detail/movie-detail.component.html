@@ -1,0 +1,42 @@
+<mat-card class="sw__content sw__card">
+  <mat-card-header>
+    <div fxFlex fxLayoutAlign="space-between center">
+      <mat-card-title>
+        <span>{{ item.title }}</span>
+      </mat-card-title>
+
+      <a [routerLink]="['/movies']" mat-button color="primary">Go to list</a>
+    </div>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        Director:
+        {{ item.director }}
+      </mat-list-item>
+      <mat-list-item>
+        Release date:
+        {{ item.release_date }}
+      </mat-list-item>
+      <mat-list-item>
+        Producer:
+        {{ item.producer }}
+      </mat-list-item>
+      <mat-list-item>
+
+      </mat-list-item>
+    </mat-list>
+
+    <div>
+      Characters:
+      <mat-chip-list>
+        <ng-container *ngFor="let character of (characters$ | async); let last = last">
+          <mat-chip [routerLink]="['/people', character.id]">
+            {{ character.name }}
+          </mat-chip>
+        </ng-container>
+      </mat-chip-list>
+    </div>
+  </mat-card-content>
+</mat-card>

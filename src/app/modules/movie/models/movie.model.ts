@@ -13,6 +13,7 @@ export class Movie {
   created?: Date;
   edited?: Date;
   url?: string;
+  id?: number;
 
   constructor(init?: Partial<Movie>) {
     Object.assign(this, init);

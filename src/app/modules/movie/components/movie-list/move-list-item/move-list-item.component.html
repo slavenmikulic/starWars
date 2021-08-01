@@ -1,0 +1,15 @@
+<app-card-list-item class="sw__card">
+  <div header>{{ item.title }}</div>
+  <div content>
+    Director
+    {{ item.director }}
+  </div>
+
+  <div actions *ngIf="itemId">
+    <a mat-stroked-button
+       color="primary"
+       [routerLink]="['./', itemId ]">
+      See more
+    </a>
+  </div>
+</app-card-list-item>

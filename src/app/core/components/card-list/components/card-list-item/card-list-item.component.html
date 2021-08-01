@@ -4,7 +4,9 @@
       <mat-card-title>
         <ng-content select="[header]"></ng-content>
       </mat-card-title>
-      <mat-icon *ngIf="isFavorite$ | async" color="primary">star</mat-icon>
+      <div>
+        <mat-icon *ngIf="isFavorite$ | async" color="primary">star</mat-icon>
+      </div>
     </mat-card-header>
 
     <div>
@@ -12,10 +14,7 @@
     </div>
   </div>
   <mat-card-content fxLayout="column" fxLayoutGap="1rem" class="sw__content">
-    <div fxLayout fxLayoutAlign="space-between center" fxLayoutGap="2rem">
-      <ng-content select="[content]"></ng-content>
-
-    </div>
+    <ng-content select="[content]"></ng-content>
   </mat-card-content>
 
   <mat-card-actions>
@@ -25,3 +24,4 @@
     </div>
   </mat-card-actions>
 </mat-card>
+

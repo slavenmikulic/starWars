@@ -1,30 +1,32 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MovieListComponent } from "./components/movie-list/movie-list.component";
-import { CardListModule } from "../../core/components/card-list/card-list.module";
 import { MoveRoutingModule } from "./move-routing.module";
 import { MovieService } from "./services/movie.service";
-import { MatPaginatorModule } from "@angular/material/paginator";
-import { FilterModule } from "../../core/components/filter/filter.module";
-import { MatDividerModule } from "@angular/material/divider";
-import { FlexModule } from "@angular/flex-layout";
+import { QueryParamsService } from "../../core/services/query-params.service";
+import { MoveListItemComponent } from './components/movie-list/move-list-item/move-list-item.component';
+import { MovieDetailComponent } from './components/movie-detail/movie-detail.component';
+import { MovieResolver } from "./resolvers/movie.resolver";
+import { PeopleService } from "../people/services/people.service";
+import { CoreModule } from "../../core/core.module";
 
 
 @NgModule({
   declarations: [
-    MovieListComponent
+    MovieListComponent,
+    MoveListItemComponent,
+    MovieDetailComponent
   ],
   imports: [
     CommonModule,
     MoveRoutingModule,
-    CardListModule,
-    MatPaginatorModule,
-    FilterModule,
-    MatDividerModule,
-    FlexModule
+    CoreModule,
   ],
   providers: [
-    MovieService
+    MovieService,
+    QueryParamsService,
+    MovieResolver,
+    PeopleService
   ]
 })
 export class MovieModule {

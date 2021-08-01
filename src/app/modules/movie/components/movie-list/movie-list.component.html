@@ -4,14 +4,13 @@
 <mat-divider></mat-divider>
 
 
-<app-card-list [semaphores$]="semaphores$">
-  <app-card-list-item *ngFor="let item of items">
-    <div header>{{ item.title }}</div>
-    <div content>
-      Director
-      {{ item.director }}
-    </div>
-  </app-card-list-item>
+<app-card-list [semaphores$]="semaphores$" class="sw__list">
+  <app-move-list-item
+    fxFlex
+    *ngFor="let item of items"
+    [item]="item">
+  </app-move-list-item>
+
 </app-card-list>
 
 <mat-paginator (page)="onChangePagination($event)" [pageSize]="10"></mat-paginator>

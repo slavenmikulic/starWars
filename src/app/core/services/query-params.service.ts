@@ -4,9 +4,7 @@ import { QueryParams } from "../models/query-params.model";
 import { BehaviorSubject, Observable } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class QueryParamsService {
   queryParams: BehaviorSubject<QueryParams>;
 

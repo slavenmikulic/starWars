@@ -4,10 +4,19 @@
     margin: 0 auto;
   }
 
+  &__list {
+    margin: 2rem;
+    display: block;
+  }
+
   &__card {
     font-family: StarWars, sans-serif;
     width: 100%;
     box-sizing: border-box;
+
+    .mat-list-item {
+      font-family: StarWars, sans-serif;
+    }
   }
 
   &__content {
