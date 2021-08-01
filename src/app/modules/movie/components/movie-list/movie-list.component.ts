@@ -3,10 +3,10 @@ import { MovieService } from "../../services/movie.service";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { People } from "../../../people/models/people.model";
 import { QueryParams } from "../../../../core/models/query-params.model";
-import { BehaviorSubject, of, Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import { Semaphores } from "../../../../core/components/semaphores/models/semaphores.model";
 import { QueryParamsService } from "../../../../core/services/query-params.service";
-import { catchError, map, takeUntil } from "rxjs/operators";
+import { takeUntil } from "rxjs/operators";
 import { Response } from "../../../../core/models/response.model";
 import { Movie } from "../../models/movie.model";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -28,12 +28,7 @@ export class MovieListComponent implements OnInit {
     order: ''
   };
 
-  semaphores$ = new BehaviorSubject<Semaphores>({
-    loading: false,
-    noData: false,
-    error: false,
-    success: false
-  });
+  semaphores$!: BehaviorSubject<Semaphores>;
 
   destroy$ = new Subject();
 
@@ -45,6 +40,7 @@ export class MovieListComponent implements OnInit {
 
   ngOnInit(): void {
     this.listenForQueryParams();
+    this.semaphores$ = this.movieService.semaphores$;
   }
 
   onChangePagination(pageEvent: PageEvent): void {
@@ -58,31 +54,12 @@ export class MovieListComponent implements OnInit {
   }
 
   private getList(params: QueryParams): void {
-    this.semaphores$.next({ loading: true });
     this.movieService.list(params)
-      .pipe(
-        catchError(response => {
-          this.semaphores$.next({ error: true });
-          return of(response);
-        }),
-        map((response: Response<People>) => {
-          if (this.params.order) {
-            response.results = this.orderItems(response.results, this.params.order);
-          }
-
-          return response;
-        }))
       .subscribe((response: Response<People>) => {
         this.items = response.results;
 
         this.paginator.length = response.count;
         this.paginator.pageIndex = this.params.page ? this.params.page - 1 : 0;
-
-        if (response.count === 0) {
-          this.semaphores$.next({ noData: true });
-        } else {
-          this.semaphores$.next({ success: true });
-        }
       });
   }
 
@@ -96,24 +73,12 @@ export class MovieListComponent implements OnInit {
       .subscribe(queryParams => {
         this.params = queryParams;
         this.getList(this.params);
+
         this.router.navigate(['./'], {
           relativeTo: this.activatedRoute,
           queryParams: queryParams,
           queryParamsHandling: 'merge'
         });
       });
-  }
-
-  private orderItems(items: People[], order: string): People[] {
-    const sortedItem = [...items];
-    if (order === 'name') {
-      sortedItem.sort(this.compareByName);
-    }
-
-    return sortedItem;
-  }
-
-  private compareByName = (a: People, b: People): number => {
-    return a.name?.localeCompare(b.name ?? '') ?? 0;
   }
 }

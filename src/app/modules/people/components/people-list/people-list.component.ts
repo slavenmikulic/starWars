@@ -5,8 +5,8 @@ import { People } from "../../models/people.model";
 import { Response } from "../../../../core/models/response.model";
 import { QueryParams } from "../../../../core/models/query-params.model";
 import { QueryParamsService } from "../../../../core/services/query-params.service";
-import { BehaviorSubject, of, Subject } from "rxjs";
-import { catchError, map, takeUntil } from "rxjs/operators";
+import { BehaviorSubject, Subject } from "rxjs";
+import { map, takeUntil } from "rxjs/operators";
 import { Semaphores } from "../../../../core/components/semaphores/models/semaphores.model";
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -27,12 +27,7 @@ export class PeopleListComponent implements OnInit, OnDestroy {
     order: ''
   };
 
-  semaphores$ = new BehaviorSubject<Semaphores>({
-    loading: false,
-    noData: false,
-    error: false,
-    success: false
-  });
+  semaphores$!: BehaviorSubject<Semaphores>;
 
   destroy$ = new Subject();
 
@@ -44,7 +39,7 @@ export class PeopleListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.listenForQueryParams();
-    // this.queryParamsService.activatedRoute = this.activatedRoute;
+    this.semaphores$ = this.peopleService.semaphores$;
   }
 
   onChangePagination(pageEvent: PageEvent): void {
@@ -63,14 +58,8 @@ export class PeopleListComponent implements OnInit, OnDestroy {
   }
 
   private getList(params: QueryParams): void {
-    this.semaphores$.next({ loading: true });
-
     this.peopleService.list(params)
       .pipe(
-        catchError(response => {
-          this.semaphores$.next({ error: true });
-          return of(response);
-        }),
         map((response: Response<People>) => {
           if (this.params.order) {
             response.results = this.orderItems(response.results, this.params.order);
@@ -83,12 +72,6 @@ export class PeopleListComponent implements OnInit, OnDestroy {
 
         this.paginator.length = response.count;
         this.paginator.pageIndex = this.params.page ? this.params.page - 1 : 0;
-
-        if (response.count === 0) {
-          this.semaphores$.next({ noData: true });
-        } else {
-          this.semaphores$.next({ success: true });
-        }
       });
   }
 
@@ -102,6 +85,7 @@ export class PeopleListComponent implements OnInit, OnDestroy {
       .subscribe(queryParams => {
         this.params = queryParams;
         this.getList(this.params);
+
         this.router.navigate(['./'], {
           relativeTo: this.activatedRoute,
           queryParams: this.params

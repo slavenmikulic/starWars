@@ -17,6 +17,12 @@
     .mat-list-item {
       font-family: StarWars, sans-serif;
     }
+
+    &--item {
+      height: 250px;
+      display: block;
+      min-width: 260px;
+    }
   }
 
   &__content {
